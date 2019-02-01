@@ -155,8 +155,7 @@ public class AmbientDisplayConfiguration {
      */
     @TestApi
     public boolean alwaysOnEnabled(int user) {
-        return boolSetting(Settings.Secure.DOZE_ALWAYS_ON, user, mAlwaysOnByDefault ? 1 : 0)
-                && alwaysOnAvailable() && !accessibilityInversionEnabled(user);
+        return alwaysOnEnabledSetting(user) || alwaysOnChargingEnabled(user);
     }
 
     /**
@@ -215,6 +214,10 @@ public class AmbientDisplayConfiguration {
         return Settings.Secure.getIntForUser(mContext.getContentResolver(), name, def, user) != 0;
     }
 
+    private boolean boolSettingSystem(String name, int user, int def) {
+        return Settings.System.getIntForUser(mContext.getContentResolver(), name, def, user) != 0;
+    }
+
     public boolean isAmbientGestureEnabled(int user) {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_WAKE_GESTURES, 1, user) != 0;
@@ -223,5 +226,21 @@ public class AmbientDisplayConfiguration {
     public boolean isAmbientTickerEnabled(int user) {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_ON_NEW_TRACKS, 0, user) == 1;
+    }
+
+    /** {@hide} */
+    public boolean alwaysOnEnabledSetting(int user) {
+        boolean alwaysOnEnabled = boolSetting(Settings.Secure.DOZE_ALWAYS_ON, user, mAlwaysOnByDefault ? 1 : 0);
+        return alwaysOnEnabled && alwaysOnAvailable() && !accessibilityInversionEnabled(user);
+    }
+
+    /** {@hide} */
+    public boolean alwaysOnChargingEnabled(int user) {
+        final boolean dozeOnChargeEnabled = boolSettingSystem(Settings.System.DOZE_ON_CHARGE, user, 0);
+        if (dozeOnChargeEnabled) {
+            final boolean dozeOnChargeEnabledNow = boolSettingSystem(Settings.System.DOZE_ON_CHARGE_NOW, user, 0);
+            return dozeOnChargeEnabledNow && alwaysOnAvailable() && !accessibilityInversionEnabled(user);
+        }
+        return false;
     }
 }
