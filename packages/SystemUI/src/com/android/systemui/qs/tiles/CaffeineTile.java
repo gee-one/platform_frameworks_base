@@ -36,12 +36,15 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.phone.SystemUIDialog;
 
+import javax.inject.Inject;
+
 /** Quick settings tile: Caffeine **/
 public class CaffeineTile extends QSTileImpl<BooleanState> {
 
     private final PowerManager.WakeLock mWakeLock;
     private final Receiver mReceiver = new Receiver();
 
+    @Inject
     public CaffeineTile(QSHost host) {
         super(host);
         mWakeLock = ((PowerManager) mContext.getSystemService(Context.POWER_SERVICE)).newWakeLock(
