@@ -296,7 +296,7 @@ public class RecordingService extends Service {
         notificationManager.createNotificationChannel(channel);
 
         mRecordingNotificationBuilder = new Notification.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_android)
+                .setSmallIcon(R.drawable.ic_sb_screenrecord)
                 .setContentTitle(getResources().getString(R.string.screenrecord_name))
                 .setUsesChronometer(true)
                 .setOngoing(true);
@@ -313,19 +313,19 @@ public class RecordingService extends Service {
 
         mRecordingNotificationBuilder.setActions(
                 new Notification.Action.Builder(
-                        Icon.createWithResource(this, R.drawable.ic_android),
+                        Icon.createWithResource(this, R.drawable.ic_sb_screenrecord),
                         getResources().getString(R.string.screenrecord_stop_label),
                         PendingIntent
                                 .getService(this, REQUEST_CODE, getStopIntent(this),
                                         PendingIntent.FLAG_UPDATE_CURRENT))
                         .build(),
                 new Notification.Action.Builder(
-                        Icon.createWithResource(this, R.drawable.ic_android), pauseString,
+                        Icon.createWithResource(this, R.drawable.ic_sb_screenrecord), pauseString,
                         PendingIntent.getService(this, REQUEST_CODE, pauseIntent,
                                 PendingIntent.FLAG_UPDATE_CURRENT))
                         .build(),
                 new Notification.Action.Builder(
-                        Icon.createWithResource(this, R.drawable.ic_android),
+                        Icon.createWithResource(this, R.drawable.ic_sb_screenrecord),
                         getResources().getString(R.string.screenrecord_cancel_label),
                         PendingIntent
                                 .getService(this, REQUEST_CODE, getCancelIntent(this),
@@ -340,7 +340,7 @@ public class RecordingService extends Service {
                 .setDataAndType(uri, "video/mp4");
 
         Notification.Action shareAction = new Notification.Action.Builder(
-                Icon.createWithResource(this, R.drawable.ic_android),
+                Icon.createWithResource(this, R.drawable.ic_sb_screenrecord),
                 getResources().getString(R.string.screenrecord_share_label),
                 PendingIntent.getService(
                         this,
@@ -350,7 +350,7 @@ public class RecordingService extends Service {
                 .build();
 
         Notification.Action deleteAction = new Notification.Action.Builder(
-                Icon.createWithResource(this, R.drawable.ic_android),
+                Icon.createWithResource(this, R.drawable.ic_sb_screenrecord),
                 getResources().getString(R.string.screenrecord_delete_label),
                 PendingIntent.getService(
                         this,
@@ -360,7 +360,7 @@ public class RecordingService extends Service {
                 .build();
 
         Notification.Builder builder = new Notification.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_android)
+                .setSmallIcon(R.drawable.ic_sb_screenrecord)
                 .setContentTitle(getResources().getString(R.string.screenrecord_name))
                 .setContentText(getResources().getString(R.string.screenrecord_save_message))
                 .setContentIntent(PendingIntent.getActivity(
